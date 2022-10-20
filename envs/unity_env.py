@@ -55,7 +55,6 @@ class UnityEnv:
         return state
 
     def step(self, actions, visualize=False):
-        print(actions)
         if self.discrete:
             actions = np.asarray(actions)
             actions = np.reshape(actions, [1, 1])

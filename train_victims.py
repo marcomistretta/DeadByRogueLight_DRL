@@ -17,7 +17,7 @@ device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 parser = argparse.ArgumentParser()
 parser.add_argument('-mn', '--model-name', help="The name of the policy", default='agent')
 parser.add_argument('-gn', '--game-name', help="The name of the game", default=None)
-parser.add_argument('-sf', '--save-frequency', help="How mane episodes after save the model", default=1000)
+parser.add_argument('-sf', '--save-frequency', help="How mane episodes after save the model", default=1)
 parser.add_argument('-lg', '--logging', help="How many episodes after logging statistics", default=100)
 parser.add_argument('-mt', '--max-timesteps', help="Max timestep per episode", default=100)
 parser.add_argument('-mp', '--multiprocessing', default=False)
@@ -57,7 +57,7 @@ if __name__ == "__main__":
     # Ignore this
     random_steps = None
     # Action space
-    action_size = 5
+    action_size = 9
 
     # Create agent
     # The policy embedding and the critic embedding for the PPO agent are defined in the architecture file
@@ -66,7 +66,7 @@ if __name__ == "__main__":
                      critic_embedding=CriticEmbedding, action_type=action_type, action_size=action_size,
                      model_name=model_name, p_lr=7e-5, v_batch_fraction=0.5, v_num_itr=2, memory=memory,
                      c2=0.001, discount=0.99, v_lr=7e-5, frequency_mode=frequency_mode, distribution='beta',
-                     action_min_value=-1, action_max_value=1, p_num_itr=10, lmbda=0.99, action_masking=False)
+                     action_min_value=-1, action_max_value=1, p_num_itr=10, lmbda=0.99, action_masking=True)
 
     envs = []
     if args.multiprocessing:

@@ -102,7 +102,7 @@ class PPOAgent(nn.Module):
                  distribution='beta', action_type='continuous', action_size=2, action_min_value=-1,
                  action_max_value=1, frequency_mode='episodes',
                  epsilon=0.2, c1=0.5, c2=0.01, discount=0.99, lmbda=1.0, name='ppo', memory=10, norm_reward=False,
-                 model_name='agent', action_masking=True,
+                 model_name='agent', action_masking=False,
                  **kwargs):
         super(PPOAgent, self).__init__()
         # Model parameters

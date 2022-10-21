@@ -20,7 +20,7 @@ class UnityEnv:
                                           side_channels=[self.curriculum_channel, self.configuration_channel])
         self.behavior_name = 'Victim?team=0'
         self.unity_env.reset()
-        self.configuration_channel.set_configuration_parameters(time_scale=5, quality_level=0)
+        self.configuration_channel.set_configuration_parameters(time_scale=100, quality_level=0)
         self._max_episode_timesteps = max_episode_timesteps
         self.config = None
         self.current_timestep = 0

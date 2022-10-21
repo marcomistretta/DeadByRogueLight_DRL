@@ -9,9 +9,9 @@ class PolicyEmbedding(nn.Module):
         super(PolicyEmbedding, self).__init__()
         self.state_dim = state_dim
 
-        self.emb = PositionalEncoding(32)
+        self.emb = nn.Embedding(10, 8)
 
-        self.conv_1 = nn.Conv2d(1, 32, (3, 3), (1, 1))
+        self.conv_1 = nn.Conv2d(8, 32, (3, 3), (1, 1))
         self.conv_2 = nn.Conv2d(32, 64, (3, 3), (1, 1))
 
         self.emb_1 = nn.Linear(2304, 256)
@@ -24,8 +24,8 @@ class PolicyEmbedding(nn.Module):
     def forward(self, state):
         BS, _ = state.shape
         h = w = int(math.sqrt(self.state_dim))
-        # state = self.emb(state)
-        state = state.view(BS, 1, h, w)
+        state = self.emb(state.int())
+        state = state.view(BS, 8, h, w)
 
         emb = F.relu(self.conv_1(state))
         emb = F.relu(self.conv_2(emb))
@@ -42,9 +42,9 @@ class CriticEmbedding(nn.Module):
     def __init__(self, state_dim, **kwargs):
         super(CriticEmbedding, self).__init__()
         self.state_dim = state_dim
-        self.emb = PositionalEncoding(32)
+        self.emb = nn.Embedding(10, 8)
 
-        self.conv_1 = nn.Conv2d(1, 32, (3, 3), (1, 1))
+        self.conv_1 = nn.Conv2d(8, 32, (3, 3), (1, 1))
         self.conv_2 = nn.Conv2d(32, 64, (3, 3), (1, 1))
         self.emb_1 = nn.Linear(2304, 256)
         self.emb_2 = nn.Linear(256, 256)
@@ -60,8 +60,8 @@ class CriticEmbedding(nn.Module):
             _ = state.shape
             BS = 1
         h = w = int(math.sqrt(self.state_dim))
-        # state = self.emb(state)
-        state = state.view(BS, 1, h, w)
+        state = self.emb(state.int())
+        state = state.view(BS, 8, h, w)
 
         emb = F.relu(self.conv_1(state))
         emb = F.relu(self.conv_2(emb))

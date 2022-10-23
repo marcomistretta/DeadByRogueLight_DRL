@@ -70,8 +70,8 @@ if __name__ == "__main__":
     # You can change those architectures, the PPOAgent will manage the action layers and the value layers
     agent = PPOAgent(state_dim=134, batch_fraction=0.5, policy_embedding=PolicyEmbedding,
                      critic_embedding=CriticEmbedding, action_type=action_type, action_size=action_size,
-                     model_name=model_name, p_lr=0.0001, v_batch_fraction=0.5, v_num_itr=2, memory=memory,
-                     c2=0.001, discount=0.99, v_lr=0.0001, frequency_mode=frequency_mode, distribution='beta',
+                     model_name=model_name, p_lr=7e-5, v_batch_fraction=0.5, v_num_itr=2, memory=memory,
+                     c2=0.001, discount=0.99, v_lr=7e-5, frequency_mode=frequency_mode, distribution='beta',
                      action_min_value=-1, action_max_value=1, p_num_itr=10, lmbda=1, action_masking=True)
 
     envs = []

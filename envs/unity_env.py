@@ -16,7 +16,7 @@ class UnityEnv:
         # Channel for passing the parameters
         self.curriculum_channel = EnvironmentParametersChannel()
         self.configuration_channel = EngineConfigurationChannel()
-        self.unity_env = UnityEnvironment(game_name, no_graphics=no_graphics, seed=worker_id, worker_id=worker_id,
+        self.unity_env = UnityEnvironment(game_name, no_graphics=no_graphics, seed=int(time.time()), worker_id=worker_id,
                                           side_channels=[self.curriculum_channel, self.configuration_channel])
         self.behavior_name = 'Victim?team=0'
         self.unity_env.reset()
@@ -45,8 +45,10 @@ class UnityEnv:
             self.curriculum_channel.set_float_parameter(par, val)
 
         decision_steps = None
+        self.unity_env.reset()
+
         while decision_steps is None or len(decision_steps.obs[0]) <= 0:
-            self.unity_env.reset()
+            self.unity_env.step()
             decision_steps, terminal_steps = self.unity_env.get_steps(self.behavior_name)
 
         # state = decision_steps.obs[0][0, :]
@@ -55,6 +57,7 @@ class UnityEnv:
         return state
 
     def step(self, actions, visualize=False):
+        # actions = input("actions: ")
         if self.discrete:
             actions = np.asarray(actions)
             actions = np.reshape(actions, [1, 1])

@@ -250,7 +250,7 @@ class Runner:
         self.current_curriculum_step = 0
 
         # If a saved model with the model_name already exists, load it (and the history attached to it)
-        if os.path.exists('{}/{}.meta'.format('saved', agent.model_name)):
+        if os.path.exists('{}/{}_actor'.format('saved', agent.model_name)):
             answer = None
             while answer != 'y' and answer != 'n':
                 answer = input("There's already an agent saved with name {}, "

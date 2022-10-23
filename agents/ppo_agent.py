@@ -22,6 +22,9 @@ class CategoricalMasked(Categorical):
                 torch.finfo(logits.dtype).min, dtype=logits.dtype
             ).to(device)
             logits = torch.where(self.mask, logits, self.mask_value)
+            for i, l in enumerate(logits[0]):
+                print("{}: {}, m:{}".format(i, l, mask[0, i]))
+            input('...')
             super(CategoricalMasked, self).__init__(logits=logits)
 
     def entropy(self):

@@ -93,6 +93,7 @@ class UnityEnv:
         if self.current_timestep > self._max_episode_timesteps:
             done = True
         self.current_timestep += 1
+        # print(reward)
         return state, reward, done
 
     def entropy(self, probs):

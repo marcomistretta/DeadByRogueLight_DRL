@@ -25,7 +25,7 @@ class PolicyEmbedding(nn.Module):
         self.l2_conv_1 = nn.Conv2d(8, 32, (3, 3), (1, 1))
         self.l2_conv_2 = nn.Conv2d(32, 64, (3, 3), (1, 1))
 
-        self.emb_1 = nn.Linear(8576, 256)
+        self.emb_1 = nn.Linear(27776, 256)
         self.emb_2 = nn.Linear(256, 256)
 
         self.output_dim = 256
@@ -33,14 +33,14 @@ class PolicyEmbedding(nn.Module):
     def forward(self, state):
         BS, _ = state.shape
 
-        gw = gh = 10
+        gw = gh = 20
         l1w = l1h = 5
         l2w = l2h = 3
 
         global_emb, local1_emb, local2_emb = torch.split(state, [gw*gh, l1h*l1w, l2h*l2w], dim=1)
 
         # Global map 10x10
-        # pg = global_emb.view(10, 10)
+        # pg = global_emb.view(20, 20)
         # print(torch.flip(torch.rot90(pg, 1, dims=[1, 0]), dims=[1,]))
 
         global_emb = F.tanh(self.embGlobal(global_emb.int()))
@@ -104,7 +104,7 @@ class CriticEmbedding(nn.Module):
         self.l2_conv_1 = nn.Conv2d(8, 32, (3, 3), (1, 1))
         self.l2_conv_2 = nn.Conv2d(32, 64, (3, 3), (1, 1))
 
-        self.emb_1 = nn.Linear(8576, 256)
+        self.emb_1 = nn.Linear(27776, 256)
         self.emb_2 = nn.Linear(256, 256)
 
         self.output_dim = 256
@@ -115,7 +115,7 @@ class CriticEmbedding(nn.Module):
         except Exception as e:
             _ = state.shape
             BS = 1
-        gw = gh = 10
+        gw = gh = 20
         l1w = l1h = 5
         l2w = l2h = 3
 

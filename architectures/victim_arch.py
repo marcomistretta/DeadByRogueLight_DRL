@@ -43,8 +43,11 @@ class PolicyEmbedding(nn.Module):
         # pg = global_emb.view(20, 20)
         # print(torch.flip(torch.rot90(pg, 1, dims=[1, 0]), dims=[1,]))
 
-        global_emb = F.tanh(self.embGlobal(global_emb.int()))
-        global_emb = global_emb.view(BS, 8, gh, gw)
+        # global_emb = F.tanh(self.embGlobal(global_emb.int()))
+        # global_emb = global_emb.view(BS, 8, gh, gw)
+        global_emb = F.one_hot(global_emb.long(), 8)
+        global_emb = global_emb.view(BS, 8, gh, gw).float()
+
         global_emb = F.pad(global_emb, (1, 1, 1, 1))
         global_emb = F.relu(self.g_conv_1(global_emb))
         global_emb = F.pad(global_emb, (1, 1, 1, 1))
@@ -55,8 +58,10 @@ class PolicyEmbedding(nn.Module):
         # l1g = local1_emb.view(5, 5)
         # print(torch.flip(torch.rot90(l1g, 1, dims=[1, 0]), dims=[1,]))
 
-        local1_emb = F.tanh(self.embLocal1(local1_emb.int()))
-        local1_emb = local1_emb.view(BS, 8, l1h, l1w)
+        # local1_emb = F.tanh(self.embLocal1(local1_emb.int()))
+        # local1_emb = local1_emb.view(BS, 8, l1h, l1w)
+        local1_emb = F.one_hot(local1_emb.long(), 8)
+        local1_emb = local1_emb.view(BS, 8, l1h, l1w).float()
         local1_emb = F.pad(local1_emb, (1, 1, 1, 1))
         local1_emb = F.relu(self.l1_conv_1(local1_emb))
         local1_emb = F.pad(local1_emb, (1, 1, 1, 1))
@@ -67,15 +72,15 @@ class PolicyEmbedding(nn.Module):
         # l2g = local2_emb.view(3, 3)
         # print(torch.flip(torch.rot90(l2g, 1, dims=[1, 0]), dims=[1,]))
 
-        local2_emb = F.tanh(self.embLocal2(local2_emb.int()))
-        local2_emb = local2_emb.view(BS, 8, l2h, l2w)
+        # local2_emb = F.tanh(self.embLocal2(local2_emb.int()))
+        # local2_emb = local2_emb.view(BS, 8, l2h, l2w)
+        local2_emb = F.one_hot(local2_emb.long(), 8)
+        local2_emb = local2_emb.view(BS, 8, l2h, l2w).float()
         local2_emb = F.pad(local2_emb, (1, 1, 1, 1))
         local2_emb = F.relu(self.l2_conv_1(local2_emb))
         local2_emb = F.pad(local2_emb, (1, 1, 1, 1))
         local2_emb = F.relu(self.l2_conv_2(local2_emb))
         local2_emb = local2_emb.view(BS, -1)
-
-
 
         # Concat
         state = torch.concat([global_emb, local1_emb, local2_emb], dim=1)

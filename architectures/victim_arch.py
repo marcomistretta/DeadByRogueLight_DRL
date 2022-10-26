@@ -14,8 +14,8 @@ class PolicyEmbedding(nn.Module):
         self.embLocal2 = nn.Embedding(10, 8)
 
         # Global map
-        self.g_conv_1 = nn.Conv2d(8, 32, (3, 3), (1, 1))
-        self.g_conv_2 = nn.Conv2d(32, 64, (3, 3), (1, 1))
+        self.g_conv_1 = nn.Conv2d(8, 32, (5, 5), (2, 2))
+        self.g_conv_2 = nn.Conv2d(32, 64, (5, 5), (2, 2))
 
         # Local map 1
         self.l1_conv_1 = nn.Conv2d(8, 32, (3, 3), (1, 1))
@@ -25,7 +25,7 @@ class PolicyEmbedding(nn.Module):
         self.l2_conv_1 = nn.Conv2d(8, 32, (3, 3), (1, 1))
         self.l2_conv_2 = nn.Conv2d(32, 64, (3, 3), (1, 1))
 
-        self.emb_1 = nn.Linear(27776, 256)
+        self.emb_1 = nn.Linear(2432, 256)
         self.emb_2 = nn.Linear(256, 256)
 
         self.output_dim = 256
@@ -48,12 +48,11 @@ class PolicyEmbedding(nn.Module):
         global_emb = F.one_hot(global_emb.long(), 8)
         global_emb = global_emb.view(BS, 8, gh, gw).float()
 
-        global_emb = F.pad(global_emb, (1, 1, 1, 1))
+        #global_emb = F.pad(global_emb, (1, 1, 1, 1))
         global_emb = F.relu(self.g_conv_1(global_emb))
-        global_emb = F.pad(global_emb, (1, 1, 1, 1))
+        #global_emb = F.pad(global_emb, (1, 1, 1, 1))
         global_emb = F.relu(self.g_conv_2(global_emb))
         global_emb = global_emb.view(BS, -1)
-
         # Local map 5x5
         # l1g = local1_emb.view(5, 5)
         # print(torch.flip(torch.rot90(l1g, 1, dims=[1, 0]), dims=[1,]))
@@ -98,8 +97,8 @@ class CriticEmbedding(nn.Module):
         self.embLocal2 = nn.Embedding(10, 8)
 
         # Global map
-        self.g_conv_1 = nn.Conv2d(8, 32, (3, 3), (1, 1))
-        self.g_conv_2 = nn.Conv2d(32, 64, (3, 3), (1, 1))
+        self.g_conv_1 = nn.Conv2d(8, 32, (5, 5), (2, 2))
+        self.g_conv_2 = nn.Conv2d(32, 64, (5, 5), (2, 2))
 
         # Local map 1
         self.l1_conv_1 = nn.Conv2d(8, 32, (3, 3), (1, 1))
@@ -109,7 +108,7 @@ class CriticEmbedding(nn.Module):
         self.l2_conv_1 = nn.Conv2d(8, 32, (3, 3), (1, 1))
         self.l2_conv_2 = nn.Conv2d(32, 64, (3, 3), (1, 1))
 
-        self.emb_1 = nn.Linear(27776, 256)
+        self.emb_1 = nn.Linear(2432, 256)
         self.emb_2 = nn.Linear(256, 256)
 
         self.output_dim = 256
@@ -130,9 +129,9 @@ class CriticEmbedding(nn.Module):
 
         global_emb = F.tanh(self.embGlobal(global_emb.int()))
         global_emb = global_emb.view(BS, 8, gh, gw)
-        global_emb = F.pad(global_emb, (1, 1, 1, 1))
+        #global_emb = F.pad(global_emb, (1, 1, 1, 1))
         global_emb = F.relu(self.g_conv_1(global_emb))
-        global_emb = F.pad(global_emb, (1, 1, 1, 1))
+        #global_emb = F.pad(global_emb, (1, 1, 1, 1))
         global_emb = F.relu(self.g_conv_2(global_emb))
         global_emb = global_emb.view(BS, -1)
 

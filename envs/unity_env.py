@@ -34,8 +34,7 @@ class UnityEnv:
         unity_config = dict()
         if self.config is not None:
             for key in self.config.keys():
-                if key != "reward_weights" and key != 'win_weight':
-                    unity_config[key] = self.config[key]
+                unity_config[key] = self.config[key]
 
         logs.getLogger("mlagents.envs").setLevel(logs.WARNING)
         self.current_timestep = 0
@@ -92,6 +91,7 @@ class UnityEnv:
 
         if self.current_timestep > self._max_episode_timesteps:
             done = True
+
         self.current_timestep += 1
         # print(reward)
         return state, reward, done

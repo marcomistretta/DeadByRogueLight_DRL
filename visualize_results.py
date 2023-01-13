@@ -16,7 +16,7 @@ parser.add_argument('-mn', '--models-name', help="The name of the model", defaul
 parser.add_argument('-nm', '--num-mean', help="The number of the episode to compute the mean", default=1000)
 parser.add_argument('-mr', '--num-mean-reward-loss', help="Same as nm, for reward loss", default=10)
 parser.add_argument('-sp', '--save-plot', help="If true save the plot in folder saved_plot", default=None)
-parser.add_argument('-ep', '--episodes', help="Number of the episodes to observe", default=None)
+parser.add_argument('-ep', '--episodes', help="Number of the episodes to observe", default=2000)
 
 parser.add_argument('-xa', '--x-axis', help="Number of the episodes to observe", default='episodes')
 args = parser.parse_args()

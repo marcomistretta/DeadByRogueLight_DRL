@@ -69,7 +69,7 @@ if __name__ == "__main__":
     # Create agent
     # The policy embedding and the critic embedding for the PPO agent are defined in the architecture file
     # You can change those architectures, the PPOAgent will manage the action layers and the value layers
-    agent = PPOAgent(state_dim=434, batch_fraction=0.5, policy_embedding=PolicyEmbedding,
+    agent = PPOAgent(state_dim=121, batch_fraction=0.5, policy_embedding=PolicyEmbedding,
                      critic_embedding=CriticEmbedding, action_type=action_type, action_size=action_size,
                      model_name=model_name, p_lr=7e-5, v_batch_fraction=0.5, v_num_itr=2, memory=memory,
                      c2=0.001, discount=0.99, v_lr=7e-5, frequency_mode=frequency_mode, distribution='beta',

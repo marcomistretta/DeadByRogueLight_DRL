@@ -1,6 +1,6 @@
 # RL Agent of Dead by RogueLight
 
-Reinforcement learning algorithms for the "Game AI Jam" project.
+Reinforcement learning algorithms for the "Game AI Jam" project: [**Dead by RogueLight**](https://sesto92.itch.io/dead-by-roguelight)
 
 ## Description
 
